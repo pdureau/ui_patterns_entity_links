@@ -10,7 +10,7 @@ use Drupal\Core\Plugin\ContextAwarePluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\ui_patterns\UiPatternsSourceManager;
 use Drupal\ui_patterns\UiPatternsManager;
-
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Drupal\ui_patterns\Form\PatternDisplayFormTrait;
 
 /**
@@ -101,6 +101,7 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
   public function build() {
 
     $config = $this->getConfiguration();
+    $rel = $this->rel;
 
     // Set pattern fields.
     $fields = [];
@@ -120,12 +121,17 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
         // On layout builder page with content preview, the entities don't have
         // id.
         if ($entity->id()) {
-          $url = $entity->toUrl($this->rel)->toString();
+          try {
+            $url = $entity->toUrl($rel)->toString();
+          }
+          catch (RouteNotFoundException $e) {
+            $url = $entity->getEntityType()->getLinkTemplate($rel);
+          }
         }
         $fields[$field['destination']] = $url;
       }
       if ($source === 'label') {
-        $label = ucfirst(str_replace('-', ' ', $this->rel));
+        $label = ucfirst(str_replace('-', ' ', $rel));
         if ($config['label_override'] !== '') {
           $label = $config['label_override'];
         }
