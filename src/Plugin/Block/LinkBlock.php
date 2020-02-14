@@ -60,7 +60,7 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, UiPatternsManager $patterns_manager, UiPatternsSourceManager $source_manager, ModuleHandlerInterface $module_handler) {
+  final public function __construct(array $configuration, $plugin_id, $plugin_definition, UiPatternsManager $patterns_manager, UiPatternsSourceManager $source_manager, ModuleHandlerInterface $module_handler) {
     $this->patternsManager = $patterns_manager;
     $this->sourceManager = $source_manager;
     $this->moduleHandler = $module_handler;
