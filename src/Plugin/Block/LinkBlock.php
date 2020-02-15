@@ -107,6 +107,9 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
     $fields = [];
     $mapping = $config['pattern_mapping'];
     $pattern = $config['pattern'];
+    if (!$pattern || $pattern === '_none') {
+      return [];
+    }
     $mapping = $mapping[$pattern]['settings'];
 
     foreach ($mapping as $source => $field) {
