@@ -81,7 +81,7 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
       $plugin_definition,
       $container->get('plugin.manager.ui_patterns'),
       $container->get('plugin.manager.ui_patterns_source'),
-      $container->get('module_handler'),
+      $container->get('module_handler')
     );
   }
 
