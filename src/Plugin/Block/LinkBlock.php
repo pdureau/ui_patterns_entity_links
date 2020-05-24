@@ -121,11 +121,12 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
       if ($source === 'url') {
         $url = '';
         $entity = $this->getEntity();
+        $absolute_url = $config['absolute_url'];
         // On layout builder page with content preview, the entities don't have
         // id.
         if ($entity->id()) {
           try {
-            $url = $entity->toUrl($rel)->toString();
+            $url = $entity->toUrl($rel, ['absolute' => $absolute_url])->toString();
           }
           catch (RouteNotFoundException $e) {
             $url = $entity->getEntityType()->getLinkTemplate($rel);
@@ -163,6 +164,7 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
   public function defaultConfiguration() {
     return [
       'label_override' => '',
+      'absolute_url' => FALSE,
       'pattern' => '',
       'variants' => '',
       'pattern_mapping' => [],
@@ -183,6 +185,13 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
       '#type' => 'textfield',
       '#title' => $this->t('Label override'),
       '#default_value' => $config['label_override'],
+    ];
+
+    // Absolute URL.
+    $form['absolute_url'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Absolute URL'),
+      '#default_value' => $config['absolute_url'],
     ];
 
     // Add UI Patterns form elements.
