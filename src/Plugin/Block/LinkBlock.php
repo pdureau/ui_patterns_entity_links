@@ -150,7 +150,7 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
     ];
 
     // Set the variant.
-    if (!empty($config['variants'])) {
+    if (!empty($config['variants']) && !empty($config['variants'][$pattern])) {
       $variant = $config['variants'][$pattern];
       $build['#variant'] = $variant;
     }
