@@ -66,7 +66,7 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
     $this->moduleHandler = $module_handler;
 
     // Get the entity type and link rel from the plugin ID.
-    list (, , $rel) = explode(static::DERIVATIVE_SEPARATOR, $plugin_id, 3);
+    [, , $rel] = explode(static::DERIVATIVE_SEPARATOR, $plugin_id, 3);
     $this->rel = $rel;
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
@@ -197,7 +197,9 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
     // Add UI Patterns form elements.
     $context = [];
     $pattern = $config['pattern'];
-    $config['pattern_variant'] = $config['variants'][$pattern];
+    if ($pattern = $config['pattern']) {
+      $config['pattern_variant'] = $config['variants'][$pattern];
+    }
     $this->buildPatternDisplayForm($form, 'entity_link', $context, $config);
     return $form;
   }
