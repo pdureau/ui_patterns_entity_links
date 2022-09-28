@@ -1,8 +1,7 @@
 name: UI Patterns Entity Links
 type: module
 description: Expose entity links as Layout Builder blocks and display them with UI Patterns components.
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement:  ^8 || ^9 || ^10
 package: User interface
 dependencies:
   - ui_patterns:ui_patterns

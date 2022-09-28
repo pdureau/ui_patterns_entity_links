@@ -155,6 +155,20 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
       $build['#variant'] = $variant;
     }
 
+    // Add the settings.
+    if (!empty($config['pattern_settings']) && !empty($config['pattern_settings'][$pattern])) {
+      $settings = $config['pattern_settings'][$pattern];
+      $build['#settings'] = $settings;
+    }
+
+    // Add context.
+    $build['#context'] = [
+      'type' => 'entity_link',
+      'entity_type' => $this->getEntity()->getEntityTypeId(),
+      'entity_id' => $this->getEntity()->id(),
+      'link' => $rel,
+    ];
+
     return $build;
   }
 
