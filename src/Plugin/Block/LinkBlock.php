@@ -99,7 +99,7 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
    * {@inheritdoc}
    */
   public function build() {
-
+    $entity = $this->getEntity();
     $config = $this->getConfiguration();
     $rel = $this->rel;
 
@@ -120,7 +120,6 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
       $source = explode(":", $source)[1];
       if ($source === 'url') {
         $url = '';
-        $entity = $this->getEntity();
         $absolute_url = $config['absolute_url'];
         // On layout builder page with content preview, the entities don't have
         // id.
@@ -164,8 +163,9 @@ class LinkBlock extends BlockBase implements ContextAwarePluginInterface, Contai
     // Add context.
     $build['#context'] = [
       'type' => 'entity_link',
-      'entity_type' => $this->getEntity()->getEntityTypeId(),
-      'entity_id' => $this->getEntity()->id(),
+      'entity' => $entity,
+      'entity_type' => $entity->getEntityTypeId(),
+      'entity_id' => $entity->id(),
       'link' => $rel,
     ];
 
